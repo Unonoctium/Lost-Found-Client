@@ -4,6 +4,9 @@ import LostItemsList from './LostItemsList';
 
 function App() {
   const [activeTab, setActiveTab] = useState('post');
+  const [refreshSignal, setRefreshSignal] = useState(0); // increment to trigger list refresh
+
+  const handlePost = () => setRefreshSignal(prev => prev + 1);
 
   return (
     <div style={{ maxWidth: '600px', margin: '20px auto', fontFamily: 'Arial, sans-serif' }}>
@@ -39,8 +42,8 @@ function App() {
       </div>
 
       <div>
-        {activeTab === 'post' && <PostLostItem />}
-        {activeTab === 'list' && <LostItemsList />}
+        {activeTab === 'post' && <PostLostItem onPost={handlePost} />}
+        {activeTab === 'list' && <LostItemsList refreshSignal={refreshSignal} />}
       </div>
     </div>
   );
